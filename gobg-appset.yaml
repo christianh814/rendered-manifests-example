@@ -25,6 +25,8 @@ spec:
             duration: 3s
             maxDuration: 3m0s
             factor: 2
+        syncOptions:
+          - CreateNamespace=true
       source:
         repoURL: https://github.com/christianh814/rendered-manifests-example
         targetRevision: 'env/{{env}}'
