@@ -21,7 +21,7 @@ jobs:
       - uses: fregante/setup-git-user@v1
       - name: Render manifests
         run: |
-          kustomize build env/${{ matrix.env }} > /tmp/all.yaml
+          kustomize build app/overlays/${{ matrix.env }} > /tmp/all.yaml
           if ! git checkout env/${{ matrix.env }} -- ; then
             git checkout --orphan env/${{ matrix.env }}
             git rm -rf .
