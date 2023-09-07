@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gobg-dev
+  namespace: argocd
+spec:
+  destination:
+    namespace: gobg-dev
+    name: in-cluster
+  project: default
+  source:
+    path: ./
+    repoURL: https://github.com/christianh814/rendered-manifests-example
+    targetRevision: env/dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      backoff:
+        duration: 3s
+        factor: 2
+        maxDuration: 3m0s
+      limit: 5
+    syncOptions:
+      - CreateNamespace=true

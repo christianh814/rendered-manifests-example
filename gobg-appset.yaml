@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: gobg
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - env: dev
+      - env: stage
+      - env: prod
+  template:
+    metadata:
+      name: 'gobg-{{env}}'
+    spec:
+      project: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        retry:
+          limit: 5
+          backoff:
+            duration: 3s
+            maxDuration: 3m0s
+            factor: 2
+      source:
+        repoURL: https://github.com/christianh814/rendered-manifests-example
+        targetRevision: 'env/{{env}}'
+        path: ./
+      destination:
+        name: in-cluster
+        namespace: 'gobg-{{env}}'
