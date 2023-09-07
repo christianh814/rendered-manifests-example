@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.DEPLOY_PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0  # needed to get all branches
       - uses: fregante/setup-git-user@v1
       - name: Render manifests
